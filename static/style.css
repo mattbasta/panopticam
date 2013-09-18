@@ -1,0 +1,75 @@
+.hidden {display: none;}
+
+body {
+    font-family: sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.screen {
+    margin: 0 auto;
+    padding: 20px 0;
+    width: 768px;
+}
+
+.screen input[type=text] {
+    border: 1px solid #999;
+    border-radius: 5px;
+    display: block;
+    font-size: 30px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.screen button {
+    background: blue;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 30px;
+    padding: 10px;
+}
+
+#snap {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#snap img {
+    height: 240;
+    width: 320;
+}
+
+#participants, #participants li {
+    list-style: none;
+}
+
+#participants li {
+    display: block;
+    border: 1px solid #D41088;
+    border-radius: 10px;
+    color: #D41088;
+    font-size: 20px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    opacity: 1;
+    text-align: center;
+    transition: all 0.2s;
+}
+#participants li:not(.active):hover {
+    background: #D41088;
+    color: #fff;
+}
+#participants li:not(.active):active {
+    background: #821759;
+}
+#participants li.active {
+    opacity: 0.4;
+}

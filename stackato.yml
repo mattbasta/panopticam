@@ -1,0 +1,11 @@
+name: panopticon
+framework:
+    type: node
+
+mem: 64m
+
+hooks:
+    pre-staging:
+        - npm install
+
+ignores: ['node_modules', '.git']

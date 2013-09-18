@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Hello Cam</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="roompicker" class="screen">
+    <input type="text" name="room" placeholder="Which room?" pattern="[a-z#]+">
+    <input type="text" name="name" placeholder="You are?" pattern="[a-z0-9\-_.]+">
+    <button>Enter</button>
+  </div>
+  <div id="room" class="screen hidden">
+    <div id="snap"></div>
+    <ul id="participants"></ul>
+  </div>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="/static/amd.js"></script>
+  <script src="/static/gumhelper.js"></script>
+  <script src="/static/gif.js"></script>
+  <script src="/static/video.js"></script>
+  <script src="/static/main.js"></script>
+</body>
+</html>
