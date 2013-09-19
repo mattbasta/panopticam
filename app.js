@@ -73,11 +73,15 @@ function Room(name) {
 //     } catch(e) {}
 // });
 
-var port = process.env.VCAP_APP_PORT || 8080;
+var port = process.env.PORT || process.env.VCAP_APP_PORT || 8080;
 var listener = app.listen(port, function() {
     console.log('Listening on ' + port);
 });
 var sock = require('socket.io').listen(listener);
+
+sock.configure(function () {
+    sock.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+});
 
 sock.sockets.on('connection', function(sock) {
     var joined = false;
