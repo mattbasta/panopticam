@@ -6,7 +6,8 @@
     "express": "3.1.x",
     "firebase": "0.6.3",
     "irc": "0.3.x",
-    "nunjucks": "0.1.x"
+    "nunjucks": "0.1.x",
+    "socket.io": "0.9.x"
   },
   "engines": {
     "node": "0.8.x",

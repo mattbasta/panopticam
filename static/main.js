@@ -1,31 +1,15 @@
 define('main', ['gumhelper', 'video'], function(gum, video) {
-    var db;
     var gifs;
+    var name;
     var user;
+
+    var socket = io.connect('/');
+
     $('#roompicker button').on('click', function() {
         var room = $('#roompicker [name=room]').val();
-        var name = $('#roompicker [name=name]').val();
-
-        db = new Firebase('https://hellocam.firebaseIO.com/rooms/' + room);
-        user = db.child(name);
-        user.set({'name': name, 'waiting': false});
-        user.on('child_changed', function(snap) {
-            console.log('User ' + snap.name() + ' changed');
-            if (snap.name() === 'waiting' && snap.val()) {
-                console.log('Starting capture');
-                startCapture();
-            }
-        });
-
-        db.on('child_added', function(snap) {
-            var user = snap.val();
-            if (!user.name) return;
-            var name = user.name;
-            name = name.replace(/</g, '');
-            name = name.replace(/>/g, '');
-            name = name.replace(/&/g, '&amp;');
-            $('#participants').append('<li data-name="' + name + '">' + name);
-        });
+        name = $('#roompicker [name=name]').val();
+        socket.emit('join', {room: room, name: name});
+        $('#participants').append('<li data-name="' + name + '">' + name);
 
         gifs = new Firebase('https://hellocam.firebaseIO.com/gifs/' + room);
         gifs.on('value', function(snap) {
@@ -48,12 +32,39 @@ define('main', ['gumhelper', 'video'], function(gum, video) {
     $('#participants').on('click', 'li:not(.active)', function() {
         var $this = $(this);
         var user = $this.data('name');
-        db.child(user).update({waiting: true});
+
         $this.addClass('active');
         setTimeout(function() {
             $this.removeClass('active');
         }, 5000);
-    })
+
+        if (user === name) {
+            startCapture();
+            return;
+        }
+        socket.emit('request', user);
+    });
+
+    socket.on('error', function(data) {
+        alert(data);
+        window.location.reload();
+    });
+
+    socket.on('leave', function(data) {
+        $('#participants [data-name="' + data + '"]').remove();
+    });
+
+    socket.on('join', function(data) {
+        data = data.replace(/</g, '');
+        data = data.replace(/>/g, '');
+        data = data.replace(/&/g, '&amp;');
+        data = data.replace(/"/g, '&quot;');
+        $('#participants').append('<li data-name="' + data + '">' + data);
+    });
+
+    socket.on('request', function() {
+        startCapture();
+    });
 
     var shooter;
     var waiting_capturer;
@@ -73,13 +84,19 @@ define('main', ['gumhelper', 'video'], function(gum, video) {
             }
         );
     }
+
+    var locked = false;
     function startCapture() {
+        if (locked) return;
+        locked = true;
+        setTimeout(function() {
+            locked = false;
+        }, 3000);
         function capturer() {
             console.log('starting capture');
             shooter.getShot(function(pickshur) {
                 console.log('uploading image');
                 gifs.set(pickshur);
-                user.update({'waiting': false});
             }, 10, 0.2);
         }
         if (shooter) {
