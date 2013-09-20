@@ -5,7 +5,13 @@ define('main', ['gumhelper', 'video'], function(gum, video) {
 
     var socket = io.connect('/');
 
-    $('#roompicker button').on('click', function() {
+    var snd = new Audio("/static/pop.wav");
+    var has_video = false;
+
+    $('#roompicker').on('submit', function(e) {
+        e.preventDefault();
+        if (!has_video) return;
+
         var room = $('#roompicker [name=room]').val();
         name = $('#roompicker [name=name]').val();
         socket.emit('join', {room: room, name: name});
@@ -21,6 +27,10 @@ define('main', ['gumhelper', 'video'], function(gum, video) {
             var img = new Image();
             img.src = src;
             img.onload = function() {
+                snd.play();
+                setTimeout(function(){
+                    snd.currentTime = 0;
+                }, 2000);
                 $('#snap').html('').append(img);
             };
         });
@@ -74,6 +84,8 @@ define('main', ['gumhelper', 'video'], function(gum, video) {
                 console.error('Could not start gum');
             },
             function successCallback(stream, videoElement, width, height) {
+                has_video = true;
+                $('#roompicker button[disabled]').prop('disabled', false);
                 videoElement.width = width / 5;
                 videoElement.height = height / 5;
                 videoElement.play();

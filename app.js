@@ -110,6 +110,7 @@ sock.sockets.on('connection', function(sock) {
     });
 
     sock.on('disconnect', function() {
+        if (!room) return;
         room.remove(name);
     });
 });

@@ -1,7 +1,17 @@
+@import url(http://fonts.googleapis.com/css?family=Aldrich);
+
 .hidden {display: none;}
 
 body {
     font-family: sans-serif;
+}
+
+h1 {
+    font-family: Aldrich, sans-serif;
+    font-weight: normal;
+    padding: 30px 0;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 * {
@@ -14,12 +24,12 @@ body {
 
 .screen {
     margin: 0 auto;
-    padding: 20px 0;
-    width: 768px;
+    padding: 20px 10px;
+    max-width: 500px;
 }
 
 .screen input[type=text] {
-    border: 1px solid #999;
+    border: 1px solid #D41088;
     border-radius: 5px;
     display: block;
     font-size: 30px;
@@ -29,10 +39,6 @@ body {
 }
 
 .screen button {
-    background: blue;
-    border: 0;
-    border-radius: 5px;
-    color: #fff;
     display: block;
     font-size: 30px;
     padding: 10px;
@@ -51,25 +57,35 @@ body {
     list-style: none;
 }
 
-#participants li {
-    display: block;
+#participants li, button {
+    background: #fff;
     border: 1px solid #D41088;
     border-radius: 10px;
     color: #D41088;
+    display: block;
     font-size: 20px;
     line-height: 40px;
     margin-bottom: 10px;
     opacity: 1;
     text-align: center;
     transition: all 0.2s;
+    width: 100%;
 }
-#participants li:not(.active):hover {
+#participants li:not(.active):hover, button:hover {
     background: #D41088;
     color: #fff;
 }
-#participants li:not(.active):active {
+#participants li:not(.active):active, button:active {
     background: #821759;
 }
 #participants li.active {
     opacity: 0.4;
+}
+
+button[disabled] {
+    opacity: 0.1;
+}
+button[disabled]:hover, button[disabled]:active {
+    background: #fff;
+    color: #D41088;
 }
