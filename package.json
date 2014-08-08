@@ -1,11 +1,10 @@
 {
-  "name": "panopticon",
+  "name": "panopticam",
   "private": true,
   "version": "0.2.0",
   "dependencies": {
     "express": "3.1.x",
     "firebase": "0.6.3",
-    "irc": "0.3.x",
     "nunjucks": "0.1.x",
     "socket.io": "0.9.x"
   },

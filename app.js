@@ -1,9 +1,7 @@
 var express = require('express');
 var Firebase = require('firebase');
-var irc = require('irc');
 var nunjucks = require('nunjucks');
 
-// var client = new irc.Client('irc.mozilla.org', 'panoptibot', {channels: ['#webdev', '#bots']});
 var db = new Firebase('https://hellocam.firebaseIO.com/');
 
 var app = express();
@@ -59,19 +57,6 @@ function Room(name) {
     };
 }
 
-
-// client.addListener('message', function(from, to, message) {
-//     try {
-//         if (message.substr(0, client.nick.length + 1) !== client.nick + ":") return;
-//         message = message.substr(client.nick.length + 1);
-
-//         var data = message.trim().split(' ', 2);
-//         db.child('gifs/' + data[0]).once('value', function() {
-//             client.say('#bots', 'crimsontwins: http://panopticon.paas.allizom.org/img/' + data[0]);
-//         });
-//         db.child('rooms/' + data[0] + '/' + data[1] + '/waiting').set(true);
-//     } catch(e) {}
-// });
 
 var port = process.env.PORT || process.env.VCAP_APP_PORT || 8080;
 var listener = app.listen(port, function() {
