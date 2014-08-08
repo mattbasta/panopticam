@@ -1,0 +1,6 @@
+{
+  "name": "Panopticam",
+  "description": "A place to see your friends",
+  "repository": "https://github.com/mattbasta/panopticam",
+  "keywords": ["web", "camera", "getUserMedia", "chat", "room", "gif"]
+}
